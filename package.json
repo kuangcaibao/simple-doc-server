@@ -1,0 +1,19 @@
+{
+  "name": "simple-doc-server",
+  "version": "1.0.0",
+  "description": "a simple doc server",
+  "scripts": {
+    "debug": "supervisor server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "doc",
+    "nodejs",
+    "express"
+  ],
+  "author": "kuangcaibao",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
