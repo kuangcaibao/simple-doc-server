@@ -4,6 +4,7 @@ var { listenport } = require("./config");
 var app = new express();
 var route = require("./route");
 
+app.use(express.static("public"));
 app.use("/", route);
 app.use("*", function(req, res) {
   res.send("404");

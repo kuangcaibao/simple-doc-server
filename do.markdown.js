@@ -33,11 +33,15 @@ var fmtWholeHtmlStrWithMd = function(mdFilePath) {
       <head>
         <meta charset="utf-8">
         <title>Test</title>
+        <link rel="stylesheet" type="text/css" href="/bootstrap-3.3.5/css/bootstrap.min.css">
       </head>
       <body>
-        ${fmtHtmlTocWithMd(mdStr)}
-        ${fmtHtmlStrWithMd(mdStr)}
+        <div class="container">
+          ${fmtHtmlStrWithMd(mdStr)}  
+        </div>
       </body>
+      <script type="text/javascript" src="/jquery-1.11.3.min.js"></script>
+      <script type="text/javascript" src="/bootstrap-3.3.5/js/bootstrap.min.js"></script>
       </html>
     `;
 
