@@ -1,20 +1,21 @@
 var express = require("express");
 
-var { listenport } = require("./config");
+var { port } = require("./config");
 var app = new express();
-var route = require("./route");
+var { changeLogRouter } = require("./router");
 
-app.use(express.static("public"));
-app.use("/", route);
+app.use(express.static("www"));
+app.use("/changelog", changeLogRouter);
+
 app.use("*", function(req, res) {
   res.send("404");
   res.end();
 });
 
-app.listen(listenport, function(err) {
+app.listen(port, function(err) {
   if(err) {
     console.log(err);
   } else {
-    console.log(`app listening at port ${listenport}`);
+    console.log(`app listening at port ${port}`);
   }
 });

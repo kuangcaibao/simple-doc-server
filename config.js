@@ -1,6 +1,6 @@
 var config = {
-  listenport: 3000,
-  docdir: "doc"
+  port: 3000,
+  mdDir: "md"
 }
 
 module.exports = config;

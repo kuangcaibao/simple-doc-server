@@ -1,6 +1,8 @@
 var fs = require("fs");
+var path = require("path");
 var marked = require("marked");
 var toc = require("markdown-toc");
+var { mdDir } = require("./dir");
 
 // 根据 md 文件的路径，获得转换为 markdown 后的 html 字符串
 var fmtHtmlStrWithMd = function(mdStr) {
@@ -23,8 +25,12 @@ var fmtHtmlTocWithMd = function(mdStr) {
   }
 }
 
-var fmtWholeHtmlStrWithMd = function(mdFilePath) {
+var fmtWholeHtmlStrWithMd = function(mdFileName) {
   try {
+    
+    var mdFilePath = path.resolve(mdDir, mdFileName);
+    
+    console.log(mdFilePath);
 
     var mdStr = fs.readFileSync(mdFilePath, "utf8");
     var wholeHtmlStr = `
