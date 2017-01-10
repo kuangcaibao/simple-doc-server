@@ -1,0 +1,118 @@
+<div class="row" id="app">
+  
+  <div class="col-md-8">
+
+    <div class="label-input-wrapper" @click="inputWrapperClick">
+      
+      <span class="label label-success"
+        v-for="(label,index) in labelsSel"
+        @click="delLabel(index)">{{label}}</span>
+
+      <input type="text" 
+        class="label-input"
+        id="labelInput" 
+        placeholder="标签, 最多使用5个标签"
+        v-model="labelInputValue"
+        @keyup.enter="subLabel(labelInputValue)"
+        @focus="labelInputFocus($event)"
+        @change="labelInputChange(labelInputValue)">
+
+      <ul class="sPanel" v-if="listDisplay">
+        <li v-for="label in filterLabel">
+          <a href="#" @click="sPanelLiClick(label, $event)">{{label}}</a>
+        </li>
+      </ul>
+
+    </div>
+
+    <textarea class="form-control" id="mde"></textarea>
+    
+    <button type="button" class="btn btn-default">提交</button>
+
+  </div>
+
+  <div class="col-md-4">
+    <h4>提示</h4>
+    <p>如果下方标签没有，可以新建标签</p>
+    <h4>标签云</h4>
+    <div>
+      <span class="label label-success"
+        v-for="label in labels"
+        @click="addLabel(label)">{{label}}</span>
+    </div>
+  </div>
+
+</div>
+<link rel="stylesheet" type="text/css" href="/simplemde/simplemde.min.css">
+<script type="text/javascript" src="/simplemde/simplemde.min.js"></script>
+<script type="text/javascript">
+
+var vm = new Vue({
+  el: "#app",
+  data: {
+    labels: ["hello", "world", "welcome", "sb", "shit", "shift"],
+    labelsSel: [], 
+    labelInputValue: "",
+    listDisplay: true
+  },
+  computed: {
+    filterLabel: function() {
+      var _that = this;
+      return this.labels.filter(function(label) {
+        return _that.labelInputValue == "" || label.indexOf(_that.labelInputValue) >= 0;
+      });
+    }
+  },
+  methods: {
+    inputWrapperClick: function(event) {
+      $("#labelInput").focus();
+    },
+    addLabel: function(label) {
+
+      for(var i = 0; i < this.labelsSel.length && i < 5; i++) {
+        if(this.labelsSel[i] == label) {
+          break;
+        }
+      }
+
+      if(i == this.labelsSel.length && i != 5) {
+        this.labelsSel.push(label);
+      }
+    },
+    delLabel: function(index) {
+      this.labelsSel.splice(index, 1);
+    },
+    subLabel: function(value) {
+      // alert(value);
+      this.labelInputValue = "";
+    },
+    labelInputFocus: function(event) {
+      console.log(1);
+      this.listDisplay = true;
+    },
+    labelInputBlur: function(event) {
+      console.log(2);
+      this.listDisplay = false;
+    },
+    labelInputChange: function(value) {
+      console.log(3);
+      this.labelInputValue = "";
+    },
+    sPanelLiClick: function(label, event) {
+      console.log(label);
+      if(this.labelsSel.indexOf(label) >= 0) {
+      } else {
+        this.labelsSel.push(label);
+      }
+    }
+  }
+})
+
+var mde = new SimpleMDE({
+  element: document.getElementById("mde"),
+  autoDownloadFontAwesome: false,
+  toolbar: false,
+  placeholder: "这里输入你的配置代码和注释, 使用 markdown 语法"
+});
+
+</script>

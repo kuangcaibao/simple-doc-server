@@ -1,0 +1,94 @@
+<div class="row">
+  
+  <div class="col-md-8" id="tLabel">
+
+    <h4>标签</h4>
+
+    <div>
+      <span class="label label-default" 
+        v-for="(label,index) in labels"
+        v-on:click="addLabel(index, $event)">{{label.name}}</span>
+    </div>
+    
+    <h4>检索条件</h4>
+
+    <div>
+      <span class="label label-success" 
+        v-for="(label,index) in labels"
+        v-if="label.selected"
+        v-on:click="delLabel(index, $event)">{{label.name}}</span>
+    </div>
+
+    <p style="margin: 10px 0;">
+      <button type="button" class="btn btn-default"
+        v-on:click="qBtnClick">查询</button>
+    </p>
+
+    <h4>检索结果</h4>
+
+  </div>
+
+  <%
+    if(typeof user !== "undefined") {
+  %>
+      <div class="col-md-4">
+        <a href="/cfg/create" type="button" class="btn btn-default">创建配置</a>
+      </div>
+  <% 
+    } else {
+  %>
+      <div class="col-md-4">
+        <a href="/cfg/create" type="button" class="btn btn-default">创建配置</a>  
+      </div>
+  <%
+    }
+  %>
+
+  <div class="col-md-4"></div>
+
+</div>
+<script type="text/javascript">
+  
+  var vm = new Vue({
+    el: "#tLabel",
+    data: {
+      labels: [{
+        name: "hello",
+        selected: false
+      }, {
+        name: "world",
+        selected: false
+      }, {
+        name: "welcome",
+        selected: false
+      }, {
+        name: "sb",
+        selected: true
+      }, {
+        name: "shit",
+        selected: false
+      }, {
+        name: "shift",
+        selected: false
+      }]
+    },
+    methods: {
+      addLabel: function(index, event) {
+        this.labels[index].selected = true;
+      },
+      delLabel: function(index, event) {
+        this.labels[index].selected = false;
+      },
+      qBtnClick: function(event) {
+        var bArr = [];
+        this.labels.map(function(label) {
+          if(label.selected) {
+            bArr.push(label.name);
+          }
+        });
+        alert(bArr.join(";"));
+      }
+    }
+  })
+
+</script>

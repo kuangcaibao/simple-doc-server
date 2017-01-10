@@ -1,0 +1,145 @@
+<style type="text/css">
+
+.s-panel {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  color: #555;
+
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.s-input-wrapper {
+  flex: 1 1 auto;
+  position: relative;
+}
+
+input.s-panel-input {
+  border: 0;
+  box-shadow: 0 0 0 0;
+  border-radius: 0;
+}
+
+.s-panel-ul {
+  top: 45px;
+  position: absolute;
+  z-index: 2;
+  width: 300px;
+  max-height: 200px;
+  overflow: auto;
+  background-color: #fff;
+  box-shadow: 0px 6px 12px 0px rgba(0, 0, 0, 0.18);
+  list-style: none;
+  border-color: #ddd;
+  padding-left: 10px;
+}
+
+</style>
+<div class="row" id="app">
+  
+  <div class="col-md-8">
+    
+    <div class="s-panel">
+      
+      <span class="label label-success" 
+        v-for="(label,index) in selectLabels"
+          @click="delLabel(index)">{{label}}</span>
+
+      <div class="s-input-wrapper">
+        
+        <input class="form-control s-panel-input" type="text" 
+          placeholder="输入标签，最多5个标签"
+          @focus="ssInputFocus"
+          @blur="ssInputBlur"
+          @keyup.enter="ssInputChange"
+          @change="ssInputChange"
+          v-model="labelInputValue">
+
+        <ul class="s-panel-ul" v-if="labelSearchShow">
+          <li v-for="label in filterLabels">
+            <a href="#" @mousedown="addLabel(label)">{{label}}</a>
+          </li>
+        </ul>
+
+      </div>
+
+    </div>
+
+    <textarea class="form-control" id="mde"></textarea>
+
+    <button type="button" class="btn btn-default"
+      @click="submitLabel">提交</button>
+
+  </div>
+
+  <div class="col-md-4"></div>
+
+</div>
+<link rel="stylesheet" type="text/css" href="/simplemde/simplemde.min.css">
+<script type="text/javascript" src="/simplemde/simplemde.min.js"></script>
+<script type="text/javascript">
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      labelSearchShow: false,
+      labelInputValue: "",
+      selectLabels: ["hello", "world"],
+      labels: ["hello", "world", "welcome", "shit", "shift", "sb"]
+    },
+    computed: {
+      filterLabels: function() {
+        var _that = this;
+        return this.labels.filter(function(label) {
+          return _that.labelInputValue == "" || label.indexOf(_that.labelInputValue) >= 0;
+        })
+      }
+    },
+    methods: {
+      addLabel: function(label) {
+
+        // 最多使用5个标签
+        if(this.selectLabels.length == 5) return;
+
+        if(this.selectLabels.indexOf(label) < 0) {
+          this.selectLabels.push(label);
+        }
+      },
+      delLabel: function(index) {
+        this.selectLabels.splice(index, 1);
+      },
+      ssInputFocus: function() {
+        this.labelSearchShow = true;
+      },
+      ssInputBlur: function(event) {
+        this.labelSearchShow = false;
+      },
+      ssInputChange: function() {
+        
+        if(this.selectLabels.length == 5 || this.labelInputValue == "") return;
+
+        if(this.labels.indexOf(this.labelInputValue) < 0) {
+          alert("该标签不存在");
+        } else if(this.selectLabels.indexOf(this.labelInputValue) < 0) {
+          this.selectLabels.push(this.labelInputValue);
+        }
+
+        // 最后都是清空输入
+        this.labelInputValue = "";
+      },
+      submitLabel: function() {
+
+      }
+    }
+  })
+
+  var mde = new SimpleMDE({
+    element: document.getElementById("mde"),
+    autoDownloadFontAwesome: false,
+    toolbar: false,
+    placeholder: "这里输入你的配置代码和注释, 使用 markdown 语法"
+  });
+</script>
