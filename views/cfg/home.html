@@ -1,22 +1,58 @@
+<style type="text/css">
+  .area-results {
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+  }
+
+  .area-cfg {
+    padding: 10px 0;
+  }
+
+  .area-cfg-split {
+    width: 100%;
+    border-bottom: 1px dashed #ddd;
+  }
+
+  .area-cfg-user {
+    font-weight: bold;
+  }
+
+  .area-cfg-content {
+    color: #999;
+  }
+
+  .area-cfg-next-page {
+    width: 100%;
+    text-align: center;
+    line-height: 20px;
+    border: 1px solid #ddd;
+  }
+
+  .area-cfg-next-page:hover {
+    cursor: pointer;
+    background-color: #ddd;
+  }
+
+</style>
+
 <div class="row">
   
   <div class="col-md-8" id="tLabel">
 
-    <h4>标签</h4>
+    <h3>标签</h3>
 
     <div>
       <span class="label label-default" 
-        v-for="(label,index) in labels"
-        v-on:click="addLabel(index, $event)">{{label.name}}</span>
+        v-for="label in labels"
+        v-on:click="addLabel(label, $event)">{{label}}</span>
     </div>
     
-    <h4>检索条件</h4>
+    <h3>检索条件</h3>
 
     <div>
       <span class="label label-success" 
-        v-for="(label,index) in labels"
-        v-if="label.selected"
-        v-on:click="delLabel(index, $event)">{{label.name}}</span>
+        v-for="(label,index) in labelsSel"
+        v-on:click="delLabel(index, $event)">{{label}}</span>
     </div>
 
     <p style="margin: 10px 0;">
@@ -24,7 +60,32 @@
         v-on:click="qBtnClick">查询</button>
     </p>
 
-    <h4>检索结果</h4>
+    <h3 class="area-results">检索结果</h3>
+
+    <div v-for="(cfg, index) in cfgs" class="area-cfg">
+      <h5>
+        <a v-bind:href="'/cfg/detail/' + cfg.id" target="blank">{{cfg.title}}</a>
+      </h5>
+      <p>
+        <span class="area-cfg-user">·{{cfg.user}}, </span>
+        <span class="area-cfg-content">{{cfg.modify_time}}</span>
+      </p>
+      <p>
+        {{cfg.abstract}}
+      </p>
+      <p>
+        <span class="label label-success" v-for="label in cfg.labels.split(',')">{{label}}</span>
+      </p>
+
+      <div v-if="index != cfgs.length - 1" class="area-cfg-split"></div>
+ 
+    </div>
+
+    <!-- 如果没有数据，显示提示信息 -->
+    <div v-if="cfgs.length == 0" class="area-cfg-content">暂无满足条件的配置信息</div>
+
+    <!-- 是否有下一页数据，这里点击查询下一页数据 -->
+    <div v-if="hasNextPage" @click="qNextPage" class="area-cfg-next-page">点击获取下一页数据</div>
 
   </div>
 
@@ -44,51 +105,15 @@
     }
   %>
 
-  <div class="col-md-4"></div>
+  <div class="col-md-4">
+
+  <h3>Tips</h3>
+
+  <p>1. 这是一个配置查询服务器，目前支持配置的查询，创建，配置详情展示</p>
+
+  <p>2. 首页根据标签，来查询对应标签下的配置列表</p>
+
+  </div>
 
 </div>
-<script type="text/javascript">
-  
-  var vm = new Vue({
-    el: "#tLabel",
-    data: {
-      labels: [{
-        name: "hello",
-        selected: false
-      }, {
-        name: "world",
-        selected: false
-      }, {
-        name: "welcome",
-        selected: false
-      }, {
-        name: "sb",
-        selected: true
-      }, {
-        name: "shit",
-        selected: false
-      }, {
-        name: "shift",
-        selected: false
-      }]
-    },
-    methods: {
-      addLabel: function(index, event) {
-        this.labels[index].selected = true;
-      },
-      delLabel: function(index, event) {
-        this.labels[index].selected = false;
-      },
-      qBtnClick: function(event) {
-        var bArr = [];
-        this.labels.map(function(label) {
-          if(label.selected) {
-            bArr.push(label.name);
-          }
-        });
-        alert(bArr.join(";"));
-      }
-    }
-  })
-
-</script>
+<script type="text/javascript" src="/views/cfg/home.js"></script>

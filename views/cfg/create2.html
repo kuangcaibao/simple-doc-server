@@ -42,8 +42,16 @@ input.s-panel-input {
 <div class="row" id="app">
   
   <div class="col-md-8">
+
+    <div class="form-line">
+      <input type="text" class="form-control" placeholder="配置标题" v-model="title">
+    </div>
+
+    <div class="form-line">
+      <textarea class="form-control" placeholder="配置内容摘要" v-model="abstract"></textarea>
+    </div>
     
-    <div class="s-panel">
+    <div class="s-panel form-line">
       
       <span class="label label-success" 
         v-for="(label,index) in selectLabels"
@@ -76,70 +84,16 @@ input.s-panel-input {
 
   </div>
 
-  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <h3>标签云</h3>
+    <div>
+      <span class="label label-success" v-for="label in labels" @click="addLabel(label)">
+        {{label}}
+      </span>
+    </div>
+  </div>
 
 </div>
 <link rel="stylesheet" type="text/css" href="/simplemde/simplemde.min.css">
 <script type="text/javascript" src="/simplemde/simplemde.min.js"></script>
-<script type="text/javascript">
-  var vm = new Vue({
-    el: "#app",
-    data: {
-      labelSearchShow: false,
-      labelInputValue: "",
-      selectLabels: ["hello", "world"],
-      labels: ["hello", "world", "welcome", "shit", "shift", "sb"]
-    },
-    computed: {
-      filterLabels: function() {
-        var _that = this;
-        return this.labels.filter(function(label) {
-          return _that.labelInputValue == "" || label.indexOf(_that.labelInputValue) >= 0;
-        })
-      }
-    },
-    methods: {
-      addLabel: function(label) {
-
-        // 最多使用5个标签
-        if(this.selectLabels.length == 5) return;
-
-        if(this.selectLabels.indexOf(label) < 0) {
-          this.selectLabels.push(label);
-        }
-      },
-      delLabel: function(index) {
-        this.selectLabels.splice(index, 1);
-      },
-      ssInputFocus: function() {
-        this.labelSearchShow = true;
-      },
-      ssInputBlur: function(event) {
-        this.labelSearchShow = false;
-      },
-      ssInputChange: function() {
-        
-        if(this.selectLabels.length == 5 || this.labelInputValue == "") return;
-
-        if(this.labels.indexOf(this.labelInputValue) < 0) {
-          alert("该标签不存在");
-        } else if(this.selectLabels.indexOf(this.labelInputValue) < 0) {
-          this.selectLabels.push(this.labelInputValue);
-        }
-
-        // 最后都是清空输入
-        this.labelInputValue = "";
-      },
-      submitLabel: function() {
-
-      }
-    }
-  })
-
-  var mde = new SimpleMDE({
-    element: document.getElementById("mde"),
-    autoDownloadFontAwesome: false,
-    toolbar: false,
-    placeholder: "这里输入你的配置代码和注释, 使用 markdown 语法"
-  });
-</script>
+<script type="text/javascript" src="/views/cfg/create2.js"></script>

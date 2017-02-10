@@ -1,19 +1,30 @@
-body {
+.tdx-header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 20px;
+  z-index: 1000;
   background-color: #fff;
 }
 
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 20px;
+.tdx-body {
+  padding-top: 60px;
+  padding-bottom: 30px;
 }
 
-/* Custom page footer */
-.footer {
-  margin-top: 19px;
-  padding-top: 19px;
+.tdx-footer {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
   color: #777;
   border-top: 1px solid #e5e5e5;
+  z-index: 1000;
+  background-color: #fff;
+}
+
+body {
+  background-color: #fff;
 }
 
 .label {
@@ -25,6 +36,6 @@ body {
   cursor: pointer;
 }
 
-.CodeMirror {
+.CodeMirror, .form-line {
   margin-top: 15px;
 }

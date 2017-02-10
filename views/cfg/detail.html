@@ -1,0 +1,57 @@
+<style type="text/css">
+  
+  .cfg-detail-head {
+    padding: 10px 0;
+    border-bottom: 1px dashed #ddd;
+  }
+
+  .cfg-detail-title {
+    font-weight: bold;
+  }
+
+  .cfg-detail-time {
+    color: #999;
+  }
+
+</style>
+
+<div class="row" id="app" data-value="<%= id%>">
+
+<div class="col-md-8 col-md-offset-2">
+  
+  <div v-if="typeof cfg.title == 'undefined'" class="cfg-detail-no-content">暂无内容</div>
+
+  <div v-else>
+    
+    <div class="cfg-detail-head">
+      
+      <h4>
+        {{cfg.title}}
+
+        <span v-if="cfg.effective == 1" class="label label-success">生效</span>
+        <span v-else class="label label-danger">废弃</span>
+
+        <a href="/cfg/modify/<%= id%>">修改</a>
+      </h4>
+
+      <p>
+        <span class="cfg-detail-title">·{{cfg.user}}, </span>
+        <span class="cfg-detail-time">{{cfg.modify_time}}</span>
+      </p>
+
+      <p>
+        <span class="label label-success" v-for="label in cfg.labels.split(',')">{{label}}</span>
+      </p>
+
+    </div>
+
+    <div class="cfg-detail-content" v-html="rawHtml"></div>
+
+  </div>
+
+</div>
+  
+
+</div>
+<script type="text/javascript" src="/marked.min.js"></script>
+<script type="text/javascript" src="/views/cfg/detail.js"></script>

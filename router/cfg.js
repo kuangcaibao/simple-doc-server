@@ -7,7 +7,8 @@ var router = express.Router();
 
 var {
   cfgHomePage,
-  cfgCreatePage
+  cfgCreatePage,
+  cfgDetailPage
 } = require("../controller/cfg");
 
 var {
@@ -18,5 +19,7 @@ router.get("/", cfgHomePage);
 // router.get("/create", userIsLogin, cfgCreatePage);
 
 router.get("/create", cfgCreatePage);
+
+router.get("/detail/:id", cfgDetailPage);
 
 module.exports = router;

@@ -1,33 +1,37 @@
-<div class="header">
-  <ul class="nav nav-pills pull-right" role="tablist">
-    <li class="presentation">
-      <a href="/cfg">配置</a>
-    </li>
-    <li class="presentation">
-      <a href="/changelog">修改记录</a>
-    </li>
-    <%
-      if(typeof user === "undefined") {
-    %>
-        <li class="presentation">
-          <a href="/user/login">登录</a>
-        </li>
-    <%
-      } else {
-    %>
-        <li>
-          <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-              <%= user.name%><span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="/user/logout">退出</a></li>
-            </ul>
-          </div>
-        </li>
-    <%
-      }
-    %>
-  </ul>
-  <h3 class="text-muted">TDX</h3>
+<div class="header tdx-header">
+  <div class="container">
+    
+    <ul class="nav nav-pills pull-right" role="tablist">
+      <li class="presentation">
+        <a href="/cfg">配置</a>
+      </li>
+      <!-- <li class="presentation">
+        <a href="/changelog">修改记录</a>
+      </li> -->
+      <%
+        if(typeof user === "undefined") {
+      %>
+          <li class="presentation">
+            <a href="/user/login">登录</a>
+          </li>
+      <%
+        } else {
+      %>
+          <li>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <%= user.name%><span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/user/logout">退出</a></li>
+              </ul>
+            </div>
+          </li>
+      <%
+        }
+      %>
+    </ul>
+    <h3 class="text-muted">TDX</h3>
+    
+  </div>
 </div>

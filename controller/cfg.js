@@ -7,3 +7,11 @@ exports.cfgHomePage = function(req, res) {
 exports.cfgCreatePage = function(req, res) {
   res.render("cfg/create2", { "title": "配置创建" });
 }
+
+// 显示配置详情界面
+exports.cfgDetailPage = function(req, res) {
+
+  var id = req.params.id;
+
+  res.render("cfg/detail", { "title": "配置详情", id: id });
+}

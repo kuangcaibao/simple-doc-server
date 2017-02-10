@@ -4,13 +4,15 @@ var ejsMate = require("ejs-mate");
 var session = require("express-session");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
+// var multer = require("multer");
 
 var { port } = require("./config");
 var app = new express();
 var { 
   changeLogRouter,
   cfgRouter,
-  userRouter
+  userRouter,
+  apiRouter
 } = require("./router");
 
 app.set("views", path.join(__dirname, "views"));
@@ -29,7 +31,9 @@ app.use(function(req, res, next) {
   next();
 });
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+// app.use(multer());
 
 app.get("/", function(req, res) {
   res.redirect("/cfg");
@@ -37,6 +41,7 @@ app.get("/", function(req, res) {
 app.use("/changelog", changeLogRouter);
 app.use("/cfg", cfgRouter);
 app.use("/user", userRouter);
+app.use("/api", apiRouter);
 
 app.use("*", function(req, res) {
   res.send("404");
