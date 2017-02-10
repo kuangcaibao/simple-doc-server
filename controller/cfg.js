@@ -15,3 +15,10 @@ exports.cfgDetailPage = function(req, res) {
 
   res.render("cfg/detail", { "title": "配置详情", id: id });
 }
+
+// 修改配置详情界面
+exports.cfgDetailModifyPage = function(req, res) {
+
+  var id = req.params.id;
+  res.render("cfg/modify", {"title": "配置修改", id: id});
+}

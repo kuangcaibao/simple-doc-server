@@ -28,7 +28,7 @@ exports.queryCfg = function(params) {
     }
   });
 
-  sql += ` order by create_time desc limit ${pos * pageSize}, ${pageSize}`;
+  sql += ` order by modify_time desc limit ${pos * pageSize}, ${pageSize}`;
 
   return JobHandler(sql);
 }
@@ -45,10 +45,13 @@ exports.modCfgDetailById = function(params) {
 
   var { id, title, abstract, labels, effective, mdStr } = params;
 
-  var sql = `udpate cfg_detail set \
-  title="${title}, abstract="${abstract}", \
-  labels="${labels}", effective="${effective}", \
-  mdStr="${mdStr}" where id=${id}`;
+  labels = labels.replace(/;/g, ",");
+
+  var sql = `update cfg_detail set title="${title}", abstract="${abstract}",\
+  labels="${labels}", effective="${effective}",\
+  content="${mdStr}" where id=${id}`;
+
+  // console.log(sql);
 
   return JobHandler(sql);
 }
